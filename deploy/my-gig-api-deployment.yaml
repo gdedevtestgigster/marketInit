@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: my-gig-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: my-gig-api
+    spec:
+      containers:
+        - name: my-gig-api
+          image: 569325332953.dkr.ecr.us-east-1.amazonaws.com/my-gig-api:__TAG__
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: my-gig-api-secrets
+            - configMapRef:
+                name: my-gig-api-configmap
+          ports:
+            - containerPort: 3000
